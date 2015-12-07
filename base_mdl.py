@@ -20,7 +20,10 @@ def main():
     y_train = train['Response'].values
     X_test = test.values
 
-    mdl = xgb.XGBRegressor(n_estimators=100,
+    mdl = xgb.XGBRegressor(learning_rate=0.05,
+                           n_estimators=200,
+                           subsample=0.5,
+                           max_depth=6,
                            silent=False)
     mdl.fit(X_train, y_train)
 
