@@ -53,11 +53,11 @@ def expected_rating(rater_a, rater_b, min_rating=None, max_rating=None):
 def quadratic_weighted_kappa(rater_a, rater_b):
 
     conf = np.array(confusion_matrix(rater_a, rater_b))
-    print conf
+    # print conf
     weight = np.array(weights(conf))
-    print weight
-    exp_rat = np.array(expected_rating(rater_a, rater_b))
-    print exp_rat
+    # print weight
+    exp_rat = np.array(expected_rating(rater_a, rater_b, 1, 8))
+    # print exp_rat
     return 1 - np.sum(conf * weight) / np.sum(exp_rat * weight)
 
 if __name__ == '__main__':
