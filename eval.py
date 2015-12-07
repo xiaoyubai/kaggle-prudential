@@ -1,16 +1,17 @@
 import numpy as np
+from sklearn.metrics import confusion_matrix
 
-def confusion_matrix(rater_a, rater_b, min_rating=None, max_rating=None):
-
-    if min_rating==None:
-        min_rating = min(rater_a + rater_b)
-    if max_rating==None:
-        max_rating = max(rater_a + rater_b)
-    number_of_rating = int(max_rating - min_rating) + 1
-    conf_mat = np.zeros((number_of_rating, number_of_rating))
-    for i in range(len(rater_a)):
-        conf_mat[rater_a[i] - 1, rater_b[i] - 1] += 1
-    return conf_mat
+# def confusion_matrix(rater_a, rater_b, min_rating=None, max_rating=None):
+#
+#     if min_rating==None:
+#         min_rating = min(rater_a + rater_b)
+#     if max_rating==None:
+#         max_rating = max(rater_a + rater_b)
+#     number_of_rating = int(max_rating - min_rating) + 1
+#     conf_mat = np.zeros((number_of_rating, number_of_rating))
+#     for i in range(len(rater_a)):
+#         conf_mat[rater_a[i] - 1, rater_b[i] - 1] += 1
+#     return conf_mat
 
 def weights(conf_mat):
 
@@ -52,11 +53,14 @@ def expected_rating(rater_a, rater_b, min_rating=None, max_rating=None):
 def quadratic_weighted_kappa(rater_a, rater_b):
 
     conf = np.array(confusion_matrix(rater_a, rater_b))
+    print conf
     weight = np.array(weights(conf))
+    print weight
     exp_rat = np.array(expected_rating(rater_a, rater_b))
+    print exp_rat
     return 1 - np.sum(conf * weight) / np.sum(exp_rat * weight)
 
 if __name__ == '__main__':
-    rater_a = [1,2,3]
-    rater_b = [4,2,6]
+    rater_a = [1,2,1,1]
+    rater_b = [1,1,1,1]
     print quadratic_weighted_kappa(rater_a, rater_b)
