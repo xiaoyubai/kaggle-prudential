@@ -39,12 +39,13 @@ def main():
     # sub = pd.DataFrame({'Id': test['Id'], 'Response': preds})
     # sub.to_csv('submissions/xgb.csv', index=False)
 
-    mdl = xgb.XGBRegressor('n_estimators': 300, 'subsample': 1.0,
-                           'learning_rate': 0.03, 'max_depth': 10)
+    mdl = xgb.XGBRegressor(n_estimators=300, subsample=1.0,
+                           learning_rate=0.03, max_depth=10)
     scorer = make_scorer(myscore)
     scores = cross_val_score(mdl, X_train, y_train, cv=5,
                              scoring=scorer, n_jobs=-1)
     print 'CV5 score =', np.mean(scores)
+    print scores
 
     mdl.fit(X_train, y_train)
 
